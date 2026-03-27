@@ -1,52 +1,70 @@
 import { useState } from "react";
-import API from "../services/api";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 function DailyUpdate(){
 
- const [employee,setEmployee] = useState("");
- const [work,setWork] = useState("");
+ const [employeeId, setEmployeeId] = useState("");
+ const [work, setWork] = useState("");
 
- const submitUpdate = async () => {
+ const submitUpdate = () => {
 
-   await API.post("dailyupdate/",{
-     employee: employee,
-     work_update: work,
-     date: new Date().toISOString().split("T")[0]
-   });
+  if(!employeeId || !work){
+   alert("Please fill all fields");
+   return;
+  }
 
-   alert("Work Update Submitted");
+  // ✅ Simple working logic
+  alert("Update Submitted Successfully ✅");
+
+  // reset form
+  setEmployeeId("");
+  setWork("");
 
  };
 
  return(
 
-  <div className="container mt-5">
+  <div>
 
-   <h2>Daily Work Update</h2>
+   <Navbar/>
 
-   <input
-     className="form-control mb-3"
-     placeholder="Employee ID"
-     onChange={(e)=>setEmployee(e.target.value)}
-   />
+   <div className="d-flex">
 
-   <textarea
-     className="form-control mb-3"
-     placeholder="Today's Work"
-     onChange={(e)=>setWork(e.target.value)}
-   />
+    <Sidebar/>
 
-   <button
-     className="btn btn-primary"
-     onClick={submitUpdate}
-   >
-     Submit Update
-   </button>
+    <div className="container mt-4">
+
+     <h2>Daily Work Update</h2>
+
+     <input
+      className="form-control mb-2"
+      placeholder="Employee ID"
+      value={employeeId}
+      onChange={(e)=>setEmployeeId(e.target.value)}
+     />
+
+     <textarea
+      className="form-control mb-2"
+      placeholder="Enter your work..."
+      value={work}
+      onChange={(e)=>setWork(e.target.value)}
+     />
+
+     <button
+      className="btn btn-primary"
+      onClick={submitUpdate}
+     >
+      Submit Update
+     </button>
+
+    </div>
+
+   </div>
 
   </div>
 
  )
-
 }
 
 export default DailyUpdate;

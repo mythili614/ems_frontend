@@ -11,22 +11,18 @@ import EmployeeList from "./pages/EmployeeList";
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
+     <Routes>
 
-        <Route path="/" element={<Login />} />
+  <Route path="/" element={<Login />} />
+  <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
+  <Route path="/admin" element={<AdminDashboard />} />
+  <Route path="/register" element={<Register />} />
+  <Route path="/daily-update" element={<DailyUpdate />} />
+  <Route path="/admin-leaves" element={<AdminLeaves />} />
+  <Route path="/leave" element={<LeavePage />} />
+  <Route path="/employees" element={<EmployeeList />} />
 
-        <Route path="/register" element={<Register />} />
-
-        <Route path="/admin" element={<AdminDashboard />} />
-
-        <Route path="/employee" element={<EmployeeDashboard />} />
-        <Route path="/daily-update" element={<DailyUpdate/>}/>
-        <Route path="/admin-leaves" element={<AdminLeaves/>}/>
-        <Route path="/leave" element={<LeavePage />} />
-        <Route path="/employees" element={<EmployeeList/>}/>
-
-
-      </Routes>
+</Routes>
     </BrowserRouter>
   );
 }

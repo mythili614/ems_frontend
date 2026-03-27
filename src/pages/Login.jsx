@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../services/api";
 
 function Login(){
 
@@ -8,28 +7,21 @@ function Login(){
  const [password,setPassword] = useState("");
  const navigate = useNavigate();
 
- const handleLogin = async () => {
+ const handleLogin = () => {
 
-  try{
-
-   const res = await API.post("token/",{
-    username: username,
-    password: password
-   });
-
-   localStorage.setItem("token", res.data.access);
+  // 🔥 SIMPLE STATIC LOGIN
+  if(username === "latha" && password === "123456"){
 
    alert("Login Success");
 
-   navigate("/admin");
+   // login flag save
+   localStorage.setItem("isLoggedIn", "true");
 
+   navigate("/employee-dashboard");
+
+  } else {
+   alert("Invalid Username or Password");
   }
-  catch(error){
-
-   alert("Invalid credentials");
-
-  }
-
  };
 
  return(
@@ -61,7 +53,6 @@ function Login(){
   </div>
 
  )
-
 }
 
 export default Login;

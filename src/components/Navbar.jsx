@@ -6,7 +6,9 @@ function Navbar(){
 
  const logout = () => {
 
-  localStorage.removeItem("role"); // remove login session
+  // ✅ correct key remove
+  localStorage.removeItem("isLoggedIn");
+
   navigate("/");
 
  };

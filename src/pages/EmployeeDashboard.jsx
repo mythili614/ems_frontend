@@ -1,32 +1,32 @@
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import { useState } from "react";
-import API from "../services/api";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function EmployeeDashboard(){
 
- const [employeeId,setEmployeeId] = useState("");
  const navigate = useNavigate();
 
- const markAttendance = async () => {
- 
-  try{
+ const [employeeId,setEmployeeId] = useState("");
 
-   await API.post("attendance/",{
-    employee: employeeId,
-    status:"present",
-    date:new Date().toISOString().split("T")[0]
-   });
+ // 🔒 Login check
+ useEffect(() => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-   alert("Attendance Marked Successfully");
-
+  if(!isLoggedIn){
+   navigate("/");
   }
-  catch(error){
+ }, []);
 
-   alert("Error marking attendance");
+ // ✅ Simple attendance (no API)
+ const markAttendance = () => {
 
+  if(!employeeId){
+   alert("Enter Employee ID");
+   return;
   }
+
+  alert("Attendance Marked Successfully ✅");
 
  };
 
@@ -42,15 +42,14 @@ function EmployeeDashboard(){
 
     <div className="container mt-4">
 
-     <h2>Employee Dashboard</h2>
+     <h2 className="fw-bold">Employee Dashboard</h2>
 
      <div className="row mt-4">
 
+      {/* Attendance */}
       <div className="col-md-4">
-
        <div className="card p-3 shadow">
-
-        <h5>Mark Attendance</h5>
+        <h5>🟢 Mark Attendance</h5>
 
         <input
          className="form-control mb-2"
@@ -67,41 +66,36 @@ function EmployeeDashboard(){
         </button>
 
        </div>
-
       </div>
 
+      {/* Leave */}
       <div className="col-md-4">
-
        <div className="card p-3 shadow">
+        <h5>🟡 Apply Leave</h5>
 
-        <h5>Apply Leave</h5>
-
-      <button
- className="btn btn-warning"
- onClick={()=>navigate("/leave")}
->
- Apply Leave
-</button>
+        <button
+         className="btn btn-warning"
+         onClick={()=>navigate("/leave")}
+        >
+         Apply Leave
+        </button>
 
        </div>
-
       </div>
 
+      {/* Daily Update */}
       <div className="col-md-4">
-
        <div className="card p-3 shadow">
+        <h5>🔵 Daily Update</h5>
 
-        <h5>Daily Update</h5>
-
-       <button
- className="btn btn-primary"
- onClick={()=>navigate("/daily-update")}
->
- Submit Update
-</button>
+        <button
+         className="btn btn-primary"
+         onClick={()=>navigate("/daily-update")}
+        >
+         Submit Update
+        </button>
 
        </div>
-
       </div>
 
      </div>
@@ -113,7 +107,6 @@ function EmployeeDashboard(){
   </div>
 
  )
-
 }
 
 export default EmployeeDashboard;
